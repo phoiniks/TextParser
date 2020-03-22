@@ -14,7 +14,7 @@ class TextParser
 			  "U", "V", "W", "X", "Y", "Z", "Ä", "Ö", "Ü"};
 
 	Logger LOGGER = Logger.getLogger( TextParser.class.getName() );
-    String eingabeDatei = args[0] + ".txt";
+    String eingabeDatei = args[0];
 	String lexikonDatei = args[0].replaceAll(".txt", "") + ".yml";
 	File datei = new File(lexikonDatei);
 	BufferedWriter lexikonSchreiber = new BufferedWriter(new FileWriter(lexikonDatei));
@@ -31,7 +31,7 @@ class TextParser
 
 	
 	try{
-	    saetze = new Scanner(new File(eingabeDatei)).useDelimiter("[\\.\\n]");
+	    saetze = new Scanner(new File(eingabeDatei)).useDelimiter("\\.\\n");
 	} catch(FileNotFoundException e) {
 	    System.out.println(e);
 	}
@@ -57,7 +57,6 @@ class TextParser
         LOGGER.info(anfang);
     }
 
-	Thread.sleep(2000);
 	
 	while(line != null){
 	    try
@@ -72,7 +71,7 @@ class TextParser
                         try{
                             incrementHashValue(lexikon, array[i]);
                         }catch(NumberFormatException e){
-                            //                            LOGGER.info(array[i]);
+                            LOGGER.info(array[i]);
                             continue;
                         }
                     }
@@ -103,7 +102,7 @@ class TextParser
 			{
 			    if(key.startsWith(str)) {
                     zeile += "\n  Status: möglicherweise Substantiv";
-                    //                    LOGGER.info(str);
+                    LOGGER.info(str);
                     getaggt = true;
 			    }
 			}
@@ -135,8 +134,8 @@ class TextParser
 	    if(getaggt)
 		zaehlerGetaggt++;
 
-        // if( key != "-")
-        //     LOGGER.info("Lemma: " + key + ", getaggt: " + getaggt);
+        if( key != "-")
+            LOGGER.info("Lemma: " + key + ", getaggt: " + getaggt);
 
 	    getaggt = false;
 	}
